@@ -352,6 +352,13 @@ class DualKLineData:
     current_orderbook: Optional[ProcessedOrderbook] = None
 
 
+# Time conversion constants
+_MILLISECONDS_PER_SECOND = 1000
+_SECONDS_PER_MINUTE = 60
+_MINUTES_PER_HOUR = 60
+_HOURS_PER_DAY = 24
+
+
 def get_interval_ms(interval: KLineInterval) -> int:
     """Convert interval to milliseconds.
 
@@ -362,14 +369,14 @@ def get_interval_ms(interval: KLineInterval) -> int:
         Interval duration in milliseconds.
     """
     interval_map: Dict[KLineInterval, int] = {
-        "30s": 30 * 1000,
-        "1m": 60 * 1000,
-        "5m": 5 * 60 * 1000,
-        "15m": 15 * 60 * 1000,
-        "30m": 30 * 60 * 1000,
-        "1h": 60 * 60 * 1000,
-        "4h": 4 * 60 * 60 * 1000,
-        "12h": 12 * 60 * 60 * 1000,
-        "1d": 24 * 60 * 60 * 1000,
+        "30s": 30 * _MILLISECONDS_PER_SECOND,
+        "1m": _SECONDS_PER_MINUTE * _MILLISECONDS_PER_SECOND,
+        "5m": 5 * _SECONDS_PER_MINUTE * _MILLISECONDS_PER_SECOND,
+        "15m": 15 * _SECONDS_PER_MINUTE * _MILLISECONDS_PER_SECOND,
+        "30m": 30 * _SECONDS_PER_MINUTE * _MILLISECONDS_PER_SECOND,
+        "1h": _SECONDS_PER_MINUTE * _MINUTES_PER_HOUR * _MILLISECONDS_PER_SECOND,
+        "4h": 4 * _SECONDS_PER_MINUTE * _MINUTES_PER_HOUR * _MILLISECONDS_PER_SECOND,
+        "12h": 12 * _SECONDS_PER_MINUTE * _MINUTES_PER_HOUR * _MILLISECONDS_PER_SECOND,
+        "1d": _HOURS_PER_DAY * _SECONDS_PER_MINUTE * _MINUTES_PER_HOUR * _MILLISECONDS_PER_SECOND,
     }
     return interval_map[interval]
